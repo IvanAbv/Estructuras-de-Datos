@@ -1,30 +1,30 @@
-#include "Fraccion.h"
-#include <iostream>
 
+#include <Fraccion.h>
+#include <Procesos.h>
+
+#include <iostream>
 using namespace std;
 
-int main(){
-    
-    float n1,d1;
-    float n2,d2;
+int main()
+{
+    float numerador1,numerador2,denominador1,denominador2;
+    cout << "Ingrese el numerador de la primera fraccion: ";
+    cin >> numerador1;
+    cout << "Ingrese el denominador de la primera fraccion: ";
+    cin >> denominador1;
+    cout << "Ingrese el numerador de la segunda fraccion: ";
+    cin >> numerador2;
+    cout << "Ingrese el denominador de la segunda fraccion: ";
+    cin >> denominador2;
 
-    Fraccion fraccion1(n1,d1);
-    Fraccion fraccion2(n2,d2);
+    Fraccion f1(numerador1, denominador1);
+    Fraccion f2(numerador2, denominador2);
 
-    cout << "Ingrese el primer numerador";
-    cin >> n1;
-    cout << "Ingrese en primer denominador";
-    cin >> d1;
-    
-    cout << "Ingrese el segundo numerador";
-    cin >> n2;
-    cout << "Ingrese el segundo denominador";
-    cin >> d2;
+    Fraccion resultado;
+    Procesos procesos; 
 
-    Fraccion resultadof = fraccion1.procesos(fraccion1, fraccion2);
+    resultado = procesos.proceso(f1, f2);
 
-    cout << resultadof.getNumerador()
-    << "/"
-    << resultadof.getDenominador(); 
-    
+    cout << "El resultado de la suma es: " << resultado.getNumerador() << "/" << resultado.getDenominador() << endl;
+    return 0;
 }

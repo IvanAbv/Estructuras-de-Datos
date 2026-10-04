@@ -1,7 +1,7 @@
 /***********************************************************************
  * Module:  Fraccion.h
  * Author:  User
- * Modified: sábado, 3 de octubre de 2026 14:42:32
+ * Modified: domingo, 4 de octubre de 2026 14:29:40
  * Purpose: Declaration of the class Fraccion
  ***********************************************************************/
 
@@ -11,8 +11,6 @@
 class Fraccion
 {
 public:
-   bool comprobarNumerador(void);
-   bool comprobarDenominador(void);
    float getNumerador(void);
    void setNumerador(float newNumerador);
    float getDenominador(void);

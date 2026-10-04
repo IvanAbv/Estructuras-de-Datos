@@ -1,33 +1,11 @@
 /***********************************************************************
  * Module:  Fraccion.cpp
  * Author:  User
- * Modified: sábado, 3 de octubre de 2026 14:42:32
+ * Modified: domingo, 4 de octubre de 2026 14:29:40
  * Purpose: Implementation of the class Fraccion
  ***********************************************************************/
 
 #include "Fraccion.h"
-
-////////////////////////////////////////////////////////////////////////
-// Name:       Fraccion::comprobarNumerador()
-// Purpose:    Implementation of Fraccion::comprobarNumerador()
-// Return:     bool
-////////////////////////////////////////////////////////////////////////
-
-bool Fraccion::comprobarNumerador(void)
-{
-   // TODO : implement
-}
-
-////////////////////////////////////////////////////////////////////////
-// Name:       Fraccion::comprobarDenominador()
-// Purpose:    Implementation of Fraccion::comprobarDenominador()
-// Return:     bool
-////////////////////////////////////////////////////////////////////////
-
-bool Fraccion::comprobarDenominador(void)
-{
-   // TODO : implement
-}
 
 ////////////////////////////////////////////////////////////////////////
 // Name:       Fraccion::getNumerador()
