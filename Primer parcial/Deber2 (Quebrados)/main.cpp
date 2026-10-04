@@ -1,8 +1,7 @@
-
+#include <iostream>
 #include "Fraccion.h"
 #include "Procesos.h"
 
-#include <iostream>
 using namespace std;
 
 int main()
