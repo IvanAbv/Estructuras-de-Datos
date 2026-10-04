@@ -1,6 +1,6 @@
 
-#include <Fraccion.h>
-#include <Procesos.h>
+#include "Fraccion.h"
+#include "Procesos.h"
 
 #include <iostream>
 using namespace std;
