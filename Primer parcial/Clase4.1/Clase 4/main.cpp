@@ -31,4 +31,5 @@ int main(void) {
 }
 //debugger
 //Crear una sola funcion para que ingrese cualquier tipo de dato
-//retorno el char y luego lo transformo vía casting
+//retorno el char y luego lo transformo vía casting quepermita borrar de derecha a izquierda y solo un punto
+//3.5.8 el segundo punto no vale 
