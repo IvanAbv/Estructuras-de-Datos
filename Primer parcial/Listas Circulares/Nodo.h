@@ -2,7 +2,6 @@
 
 #include "Persona.h"
 
-#include "Persona.h"
 #include <iostream>
 
 using namespace std;
@@ -11,21 +10,24 @@ class Nodo {
 private:
     Persona persona;
     Nodo* siguiente;
+    Nodo* anterior; 
 
 public:
-    // Constructores
     Nodo();
-    Nodo(const Persona& persona, Nodo* siguiente = nullptr);
+    Nodo(const Persona& persona, Nodo* siguiente = nullptr, Nodo* anterior = nullptr);
 
-    // Getters y Setters básicos
     Persona getPersona() const;
     Nodo* getSiguiente() const;
+    Nodo* getAnterior() const;
+    
     void setPersona(const Persona& persona);
     void setSiguiente(Nodo* siguiente);
+    void setAnterior(Nodo* anterior);
 
-    // Métodos de la lista circular manejados desde el Nodo raíz/cabeza
+
     void insertar(Nodo*& cabeza, const string& cedula, const string& nombre, const string& apellido);
     void buscarPorCedula(Nodo* inicio, const string& cedulaBuscada);
-    bool eliminar(Nodo*& cabeza, const string& cedula);
-    void imprimir(Nodo* cabeza) const;
+    void eliminar(Nodo*& cabeza, Nodo*& cola, const string& cedula);
+    void Imprimir(Nodo* cabeza) const;
+    void ImprimirReverso(Nodo* cabeza) const; 
 };

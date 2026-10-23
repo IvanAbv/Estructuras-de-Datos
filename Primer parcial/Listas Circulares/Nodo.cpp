@@ -1,16 +1,18 @@
 #include "Nodo.h"
 
-// Constructores
+
 Nodo::Nodo() {
     this->siguiente = nullptr;
+    this->anterior = nullptr;
 }
 
-Nodo::Nodo(const Persona& persona, Nodo* siguiente) {
+Nodo::Nodo(const Persona& persona, Nodo* siguiente, Nodo* anterior) {
     this->persona = persona;
     this->siguiente = siguiente;
+    this->anterior = anterior;
 }
 
-// Getters y Setters
+
 Persona Nodo::getPersona() const {
     return this->persona;
 }
@@ -33,18 +35,20 @@ void Nodo::insertar(Nodo*& cabeza, const string& cedula, const string& nombre, c
 
     if (cabeza == nullptr) {
         cabeza = nuevo;
-        nuevo->setSiguiente(cabeza); 
+        cabeza->setSiguiente(cabeza);
+        cabeza->setAnterior(cabeza);
         cout << "Persona insertada con exito." << endl;
         return;
     }
 
-    Nodo* aux = cabeza;
-    while (aux->getSiguiente() != cabeza) {
-        aux = aux->getSiguiente();
-    }
+    Nodo* ultimo = cabeza->getAnterior();
 
-    aux->setSiguiente(nuevo);
+    ultimo->setSiguiente(nuevo);
+    nuevo->setAnterior(ultimo);
+    
     nuevo->setSiguiente(cabeza);
+    cabeza->setAnterior(nuevo);
+
     cout << "Persona insertada con exito." << endl;
 }
 
@@ -70,45 +74,60 @@ void Nodo::buscarPorCedula(Nodo* inicio, const string& cedulaBuscada) {
     cout << "No se encontro esa cedula." << endl;
 }
 
-bool Nodo::eliminar(Nodo*& cabeza, const string& cedula) {
-    if (cabeza == nullptr) return false;
+void Nodo::eliminar(Nodo*& cabeza, Nodo*& cola, const string& cedula) {
 
-    Nodo* actual = cabeza;
-    Nodo* anterior = nullptr;
-
-    if (cabeza->getPersona().getCedula() == cedula) {
-        if (cabeza->getSiguiente() == cabeza) {
-            delete cabeza;
-            cabeza = nullptr;
-            return true;
-        }
-
-        Nodo* ultimo = cabeza;
-        while (ultimo->getSiguiente() != cabeza) {
-            ultimo = ultimo->getSiguiente();
-        }
-
-        Nodo* temp = cabeza;
-        cabeza = cabeza->getSiguiente();
-        ultimo->setSiguiente(cabeza);
-        delete temp;
-        return true;
+    if (cabeza == nullptr) {
+        cout << "La lista esta vacia. No hay elementos para eliminar." << endl; 
+        return;
     }
-
-    anterior = cabeza;
-    actual = cabeza->getSiguiente();
-
-    while (actual != cabeza) {
+    
+    Nodo* actual = cabeza;    
+    bool encontrado = false;
+    bool continuar = true;    
+    
+    while (continuar && !encontrado) {
         if (actual->getPersona().getCedula() == cedula) {
-            anterior->setSiguiente(actual->getSiguiente());
-            delete actual;
-            return true;
+            encontrado = true;
+        } else {
+            actual = actual->getSiguiente();
+            if (actual == cabeza) {
+                continuar = false;
+            }
         }
-        anterior = actual;
-        actual = actual->getSiguiente();
+    }
+    
+    if (!encontrado) {
+        cout << "No se encontro ningun registro con la cedula: " << cedula << endl;
+        return;
+    }
+    
+    if (cabeza == cola && cabeza == actual) { 
+        delete cabeza;                        
+        cabeza = nullptr;
+        cola = nullptr;
     }
 
-    return false; 
+    else if (actual == cabeza) {
+        cabeza = cabeza->getSiguiente();           
+        cola->setSiguiente(cabeza);                
+        cabeza->setAnterior(cola);                 
+        delete actual;                             
+    }
+    
+    else if (actual == cola) {
+        cola = cola->getAnterior();                
+        cola->setSiguiente(cabeza);               
+        cabeza->setAnterior(cola);                 
+        delete actual;                             
+    }
+    
+    else {
+        actual->getAnterior()->setSiguiente(actual->getSiguiente()); 
+        actual->getSiguiente()->setAnterior(actual->getAnterior());  
+        delete actual;                                               
+    }
+    
+    cout << "Registro con cedula " << cedula << " eliminado exitosamente." << endl;
 }
 
 void Imprimir(Nodo* cabeza){
