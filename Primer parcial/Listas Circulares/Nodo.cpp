@@ -216,3 +216,26 @@ int Nodo::contarNodos(Nodo* cabeza){
 
     return contador;
 }
+
+void liberarLista(Nodo*& cabeza) {
+    if (cabeza == nullptr) {
+        return;
+    }
+
+    Nodo* actual = cabeza;
+    Nodo* siguienteNodo = nullptr;
+    
+    // Rompemos el enlace circular para evitar bucles infinitos al borrar
+    Nodo* cola = cabeza->getAnterior();
+    cola->setSiguiente(nullptr);
+    cabeza->setAnterior(nullptr);
+
+    while (actual != nullptr) {
+        siguienteNodo = actual->getSiguiente();
+        delete actual;
+        actual = siguienteNodo;
+    }
+
+    cabeza = nullptr;
+    cout << "Todos los elementos de la lista han sido eliminados y la memoria liberada." << endl;
+}

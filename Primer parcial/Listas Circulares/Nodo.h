@@ -32,4 +32,5 @@ public:
     void ImprimirReverso(Nodo* cabeza) const; 
     static void modificar(Nodo* inicio, const string& cedulaBuscada);
     static int contarNodos(Nodo* cabeza);
+    static void liberarLista(Nodo*& cabeza);
 };
