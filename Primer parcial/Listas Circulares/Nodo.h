@@ -25,11 +25,11 @@ public:
     void setAnterior(Nodo* anterior);
 
 
-    void insertar(Nodo*& cabeza, const string& cedula, const string& nombre, const string& apellido);
-    void buscarPorCedula(Nodo* inicio, const string& cedulaBuscada);
-    void eliminar(Nodo*& cabeza, Nodo*& cola, const string& cedula);
+    static void insertar(Nodo*& cabeza, const string& cedula, const string& nombre, const string& apellido);
+    static void buscarPorCedula(Nodo* inicio, const string& cedulaBuscada);
+    static void eliminar(Nodo*& cabeza, Nodo*& cola, const string& cedula);
     void Imprimir(Nodo* cabeza) const;
     void ImprimirReverso(Nodo* cabeza) const; 
-    void modificar(Nodo* inicio, const string& cedulaBuscada);
-    int Nodo::contarNodos(Nodo* cabeza);
+    static void modificar(Nodo* inicio, const string& cedulaBuscada);
+    static int contarNodos(Nodo* cabeza);
 };

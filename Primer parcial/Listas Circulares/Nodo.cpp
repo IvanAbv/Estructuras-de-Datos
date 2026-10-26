@@ -25,6 +25,14 @@ void Nodo::setPersona(const Persona& persona) {
     this->persona = persona;
 }
 
+Nodo* Nodo::getAnterior() const {
+    return this->anterior;
+}
+
+void Nodo::setAnterior(Nodo* anterior) {
+    this->anterior = anterior;
+}
+
 void Nodo::setSiguiente(Nodo* siguiente) {
     this->siguiente = siguiente;
 }
@@ -130,32 +138,34 @@ void Nodo::eliminar(Nodo*& cabeza, Nodo*& cola, const string& cedula) {
     cout << "Registro con cedula " << cedula << " eliminado exitosamente." << endl;
 }
 
-void Imprimir(Nodo* cabeza){
-    if (cabeza == nullptr){
+void Nodo::Imprimir(Nodo* cabeza) const {
+    if (cabeza == nullptr) {
         cout << "La lista esta vacia" << endl;
         return;
     }
     Nodo* aux = cabeza;
-    do{
+    do {
         cout << "Cedula: " << aux->getPersona().getCedula() << endl;
         cout << "Nombre: " << aux->getPersona().getNombre() << endl;
         cout << "Apellido: " << aux->getPersona().getApellido() << endl;
         aux = aux->getSiguiente();
-    } while(aux != cabeza);
+    } while (aux != cabeza);
 }
 
-void ImprimirReverso(Nodo* cola){
-    Nodo* aux = cola;
-    if (cola==nullptr){
-        cout << "La lista esta vacia" <<endl;
+void Nodo::ImprimirReverso(Nodo* cabeza) const {
+    if (cabeza == nullptr) {
+        cout << "La lista esta vacia" << endl;
         return;
     }
-    do{
-        cout << "Cedula: " << aux->getPersona().getCedula() <<endl;
-        cout << "Nombre: " << aux->getPersona().getNombre() <<endl;
-        cout << "Apellido: " << aux->getPersona().getApellido() <<endl;
+    // En lista circular, la cola es el nodo anterior a la cabeza
+    Nodo* aux = cabeza->getAnterior();
+    Nodo* cola = aux;
+    do {
+        cout << "Cedula: " << aux->getPersona().getCedula() << endl;
+        cout << "Nombre: " << aux->getPersona().getNombre() << endl;
+        cout << "Apellido: " << aux->getPersona().getApellido() << endl;
         aux = aux->getAnterior();
-    }while(aux!=cola);
+    } while (aux != cola);
 }
 
 void Nodo::modificar(Nodo* inicio, const string& cedulaBuscada) {
@@ -192,7 +202,7 @@ void Nodo::modificar(Nodo* inicio, const string& cedulaBuscada) {
     cout << "No se encontro esa cedula.\n";
 }
 
-int Nodo::contarNodos(Nodo* cabeza) {
+int Nodo::contarNodos(Nodo* cabeza){
     if (cabeza == nullptr) {
         return 0;
     }

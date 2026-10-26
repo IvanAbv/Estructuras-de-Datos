@@ -36,7 +36,7 @@ void Persona::setApellido(const string& apellido) {
     this->apellido = apellido;
 }
 
-bool validarCedula(const string& cedula){
+bool Persona::validarCedula(const string& cedula){
      if (cedula.length() != 10) return false;
 
     int provincia = stoi(cedula.substr(0, 2));
