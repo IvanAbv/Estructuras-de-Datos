@@ -1,134 +1,97 @@
 #include <iostream>
 #include <string>
-
 using namespace std;
 
 class Persona {
 public:
-    string cedula;
-    string nombre;
-    string apellido;
-    
-    Persona(string ced, string nom, string ap) {
-        cedula = ced;
-        nombre = nom;
-        apellido = ap;
-    }
+    string ced, nom, ap;
+    Persona(string c, string n, string a) : ced(c), nom(n), ap(a) {}
 };
 
 class Nodo {
 public:
-    Persona persona;
-    Nodo* siguiente;
-    Nodo* anterior;
+    Persona p;
+    Nodo* sig;
+    Nodo* ant;
+    Nodo(Persona persona) : p(persona), sig(nullptr), ant(nullptr) {}
 
-    Nodo(Persona p) : persona(p), siguiente(nullptr), anterior(nullptr) {}
-
-    // 1. MÉTODO INSERTAR
-    static void insertar(Nodo*& cabeza, string cedula, string nombre, string apellido) {
-        Persona nuevaPersona(cedula, nombre, apellido);
-        Nodo* nuevo = new Nodo(nuevaPersona);
-
-        if (cabeza == nullptr) {
-            cabeza = nuevo;
-            cabeza->siguiente = cabeza;
-            cabeza->anterior = cabeza;
+    static void insertar(Nodo*& cab, string c, string n, string a) {
+        Nodo* nuevo = new Nodo(Persona(c, n, a));
+        if (!cab) {
+            cab = nuevo;
+            cab->sig = cab;
+            cab->ant = cab;
             return;
         }
-
-        Nodo* ultimo = cabeza->anterior;
-        ultimo->siguiente = nuevo;
-        nuevo->anterior = ultimo;
-        nuevo->siguiente = cabeza;
-        cabeza->anterior = nuevo;
+        Nodo* ult = cab->ant;
+        ult->sig = nuevo;
+        nuevo->ant = ult;
+        nuevo->sig = cab;
+        cab->ant = nuevo;
     }
 
-    // 2. MÉTODO BUSCAR
-    static void buscar(Nodo* cabeza, string cedulaBuscada) {
-        if (cabeza == nullptr) {
-            cout << "Lista vacia.\n";
-            return;
-        }
-
-        Nodo* actual = cabeza;
+    static void buscar(Nodo* cab, string ced) {
+        if (!cab) return;
+        Nodo* act = cab;
         do {
-            if (actual->persona.cedula == cedulaBuscada) {
-                cout << "Encontrado: " << actual->persona.nombre << "\n";
+            if (act->p.ced == ced) {
+                cout << "Encontrado: " << act->p.nom << endl;
                 return;
             }
-            actual = actual->siguiente;
-        } while (actual != cabeza);
-
-        cout << "No encontrado.\n";
+            act = act->sig;
+        } while (act != cab);
     }
 
-    // 3. MÉTODO IMPRIMIR
-    static void imprimir(Nodo* cabeza) {
-        if (cabeza == nullptr) {
-            cout << "Lista vacia.\n";
-            return;
-        }
-
-        Nodo* actual = cabeza;
-        cout << "Elementos en la lista:\n";
+    static void imprimir(Nodo* cab) {
+        if (!cab) return;
+        Nodo* act = cab;
         do {
-            cout << "- " << actual->persona.nombre << " (" << actual->persona.cedula << ")\n";
-            actual = actual->siguiente;
-        } while (actual != cabeza);
+            cout << act->p.nom << " -> ";
+            act = act->sig;
+        } while (act != cab);
+        cout << "(fin)\n";
     }
 
-    // 4. MÉTODO ELIMINAR
-    static void eliminar(Nodo*& cabeza, string cedulaBuscada) {
-        if (cabeza == nullptr) return;
-
-        Nodo* actual = cabeza;
-        bool encontrado = false;
-
+    static void eliminar(Nodo*& cab, string ced) {
+        if (!cab) return;
+        Nodo* act = cab;
+        bool enc = false;
         do {
-            if (actual->persona.cedula == cedulaBuscada) {
-                encontrado = true;
+            if (act->p.ced == ced) {
+                enc = true;
                 break;
             }
-            actual = actual->siguiente;
-        } while (actual != cabeza);
+            act = act->sig;
+        } while (act != cab);
 
-        if (!encontrado) return;
+        if (!enc) return;
 
-        // Caso: Único nodo
-        if (actual->siguiente == cabeza && actual->anterior == cabeza) {
-            delete actual;
-            cabeza = nullptr;
+        if (act->sig == cab && act->ant == cab) {
+            delete act;
+            cab = nullptr;
             return;
         }
 
-        // Caso general: Desconectar nodo del medio/extremos
-        actual->anterior->siguiente = actual->siguiente;
-        actual->siguiente->anterior = actual->anterior;
+        act->ant->sig = act->sig;
+        act->sig->ant = act->ant;
 
-        // Si borramos la cabeza, mover el puntero cabeza al siguiente
-        if (actual == cabeza) {
-            cabeza = actual->siguiente;
+        if (act == cab) {
+            cab = act->sig;
         }
-
-        delete actual;
+        delete act;
     }
 };
 
 int main() {
-    Nodo* cabeza = nullptr;
-
-    // Pruebas para ir avanzando paso a paso en Python Tutor
-    Nodo::insertar(cabeza, "1711", "Ana", "Perez");
-    Nodo::insertar(cabeza, "1722", "Luis", "Gomez");
-    Nodo::insertar(cabeza, "1733", "Carlos", "Ruiz");
-
-    Nodo::imprimir(cabeza);
-
-    Nodo::buscar(cabeza, "1722");
-
-    Nodo::eliminar(cabeza, "1711");
+    Nodo* cab = nullptr;
+    Nodo::insertar(cab, "1", "Ana", "P");
+    Nodo::insertar(cab, "2", "Luis", "G");
+    Nodo::insertar(cab, "3", "Carlos", "R");
     
-    Nodo::imprimir(cabeza);
+    Nodo::imprimir(cab);
+    Nodo::buscar(cab, "2");
+    Nodo::eliminar(cab, "1");
+    Nodo::imprimir(cab);
 
     return 0;
 }
