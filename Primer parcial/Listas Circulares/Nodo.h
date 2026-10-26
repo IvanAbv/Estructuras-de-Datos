@@ -30,4 +30,6 @@ public:
     void eliminar(Nodo*& cabeza, Nodo*& cola, const string& cedula);
     void Imprimir(Nodo* cabeza) const;
     void ImprimirReverso(Nodo* cabeza) const; 
+    void modificar(Nodo* inicio, const string& cedulaBuscada);
+    int Nodo::contarNodos(Nodo* cabeza);
 };

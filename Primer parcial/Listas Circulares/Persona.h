@@ -21,4 +21,5 @@ public:
     void setCedula(const string& cedula);
     void setNombre(const string& nombre);
     void setApellido(const string& apellido);
+    bool validarCedula(const string& cedula);
 };

@@ -143,3 +143,66 @@ void Imprimir(Nodo* cabeza){
         aux = aux->getSiguiente();
     } while(aux != cabeza);
 }
+
+void ImprimirReverso(Nodo* cola){
+    Nodo* aux = cola;
+    if (cola==nullptr){
+        cout << "La lista esta vacia" <<endl;
+        return;
+    }
+    do{
+        cout << "Cedula: " << aux->getPersona().getCedula() <<endl;
+        cout << "Nombre: " << aux->getPersona().getNombre() <<endl;
+        cout << "Apellido: " << aux->getPersona().getApellido() <<endl;
+        aux = aux->getAnterior();
+    }while(aux!=cola);
+}
+
+void Nodo::modificar(Nodo* inicio, const string& cedulaBuscada) {
+    if (inicio == nullptr) {
+        cout << "La lista esta vacia.\n";
+        return;
+    }
+
+    Nodo* actual = inicio;
+
+    do {
+        if (actual->getPersona().getCedula() == cedulaBuscada) {
+            cout << "Nombre actual: " << actual->getPersona().getNombre() << endl;
+            cout << "Ingrese el nuevo nombre: ";
+            
+            string nuevoNombre;
+            //Limpia el buffer
+            cin >> ws;
+            getline(cin, nuevoNombre);
+
+            Persona pActual = actual->getPersona();
+
+            Persona personaModificada(pActual.getCedula(), nuevoNombre, pActual.getApellido());
+
+            actual->setPersona(personaModificada);
+
+            cout << "Datos modificados correctamente.\n";
+            return;
+        }
+
+        actual = actual->getSiguiente();
+    } while (actual != inicio);
+
+    cout << "No se encontro esa cedula.\n";
+}
+
+int Nodo::contarNodos(Nodo* cabeza) {
+    if (cabeza == nullptr) {
+        return 0;
+    }
+
+    int contador = 0;
+    Nodo* actual = cabeza;
+    do {
+        contador++;
+        actual = actual->getSiguiente();
+    } while (actual != cabeza);
+
+    return contador;
+}
